@@ -1,10 +1,8 @@
-// A mock function to mimic making an async request for data
 export const fetchUsers = async () => {
     const response = await fetch("http://localhost:3001/users", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
-    console.log(response);
     const result: { data: any } = await response.json();
   
     return result;

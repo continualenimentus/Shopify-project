@@ -5,7 +5,7 @@ import { createUser, fetchUsers, updateUser, deleteUser } from "./customerAPI";
 
 
 export interface CustomerSliceState {
-  users: [];
+  users: any[];
   status: "idle" | "loading" | "failed";
 }
 
@@ -39,7 +39,7 @@ export const customerSlice = createAppSlice({
     getUsers: create.asyncThunk(
         async () => {
             const response = await fetchUsers();
-            return response.data;
+            return response;
         },
         {
             pending: (state) => {
@@ -94,6 +94,7 @@ export const customerSlice = createAppSlice({
   }),
   selectors: {
     selectUsers: (users) => users.users,
+    selectStatus: (users) => users.status,
   },
 });
 
@@ -102,4 +103,4 @@ export const { createNewUser, getUsers, updateCurrentUser, deleteCurrentUser } =
   customerSlice.actions;
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.
-export const { selectUsers } = customerSlice.selectors;
+export const { selectUsers, selectStatus } = customerSlice.selectors;

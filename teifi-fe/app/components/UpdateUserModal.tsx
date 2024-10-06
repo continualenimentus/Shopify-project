@@ -4,17 +4,20 @@ import {Button, Modal, PageActions} from '@shopify/polaris';
 import EmailInput from './EmailInput';
 import TextInput from './TextInput';
 import { useState } from "react";
+import { updateCurrentUser, getUsers, deleteCurrentUser} from '@/lib/features/customers/customerSlice';
+import { useAppDispatch } from '@/lib/hooks';
 
-export default function UpdateUserModal(
-  user:any
-) {  
-  const [email, setEmail] = useState("");
+export default function UpdateUserModal(user:any) {  
+  const dispatch = useAppDispatch();
+  const u = user.user;
+  const [email, setEmail] = useState(u.email);
   const [emailError, setEmailError] = useState(false);
-  const [firstName, setFirstName] = useState("");
+  const [firstName, setFirstName] = useState(u.firstName);
   const [firstNameError, setFirstNameError] = useState(false);
-  const [lastName, setLastName] = useState("");
+  const [lastName, setLastName] = useState(u.lastName);
   const [lastNameError, setLastNameError] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
 
   const handleEmailChange = (value: string) => {
     setEmail(value);
@@ -24,7 +27,6 @@ export default function UpdateUserModal(
   const handleEmailBlur = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const isValid = emailRegex.test(email);
-
     if (!isValid) {
       setEmailError(true);
     }
@@ -65,12 +67,14 @@ export default function UpdateUserModal(
    const handleFormSubmit = (id:string) => {
     if (emailError || firstNameError || lastNameError) {
         return;
-      }
-      if(email === "" || firstName === "" || lastName === ""){
-        return;
-      }
-    if(user.id){
-        // make api call to back-end to update the user
+    }
+    else if(email === "" || firstName === "" || lastName === ""){
+    return;
+    }
+    else{
+      dispatch(updateCurrentUser({id, firstName, lastName, email}));
+      dispatch(getUsers());
+      handleCloseModal();
     }
   }
 
@@ -89,20 +93,22 @@ export default function UpdateUserModal(
    }
 
    const handleDeleteUser = (id:string) => {
-    // make api call to back-end to delete the user using the id
+    console.log(id);
+    dispatch(deleteCurrentUser(id));
+    dispatch(getUsers());
    }
 
   return (
     <>
       <Button onClick={()=>setShowModal(true)} variant='primary'>Update User</Button>
-      <Button onClick={()=>handleDeleteUser(user.id)} variant='secondary'>Delete user</Button>
+      <Button onClick={()=>handleDeleteUser(u.id)} variant='secondary'>Delete user</Button>
       <Modal title="Update User" open={showModal} onClose={handleCloseModal}>
             <TextInput value={firstName} onChange={handleFirstNameChange} onBlur={handleFirstNameBlur} err={firstNameError} label="First Name"/>
             <TextInput value={lastName} onChange={handleLastNameChange} onBlur={handleLastNameBlur} err={lastNameError} label="Last Name"/>
             <EmailInput value={email} onChange={handleEmailChange} onBlur={handleEmailBlur} err={emailError}/>
             <br />
             <PageActions
-            primaryAction={{content:'Save', onAction:()=>handleFormSubmit(user.id)}} 
+            primaryAction={{content:'Save', onAction:()=>handleFormSubmit(u.id)}} 
             secondaryActions={[{content:'Discard', destructive:true, onAction:handleClearFields}]}/>
       </Modal>
     </>
