@@ -8,7 +8,7 @@ export default function IndexPage() {
   return (
     <>
       <AppProvider i18n={enTranslations}>
-      <CreateUserModal />
+      <CreateUserModal/>
       <UserList />
       </AppProvider>
     </>

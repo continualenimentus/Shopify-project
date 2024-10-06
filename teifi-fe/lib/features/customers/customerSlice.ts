@@ -27,9 +27,8 @@ export const customerSlice = createAppSlice({
             pending: (state) => {
             state.status = "loading";
             },
-            fulfilled: (state, action) => {
+            fulfilled: (state) => {
             state.status = "idle";
-            state.users = action.payload;
             },
             rejected: (state) => {
             state.status = "failed";
@@ -63,10 +62,8 @@ export const customerSlice = createAppSlice({
             pending: (state) => {
             state.status = "loading";
             },
-            fulfilled: (state, action) => {
+            fulfilled: (state) => {
             state.status = "idle";
-            // TODO will check this one 
-            state.users = action.payload;
             },
             rejected: (state) => {
             state.status = "failed";
@@ -82,9 +79,8 @@ export const customerSlice = createAppSlice({
             pending: (state) => {
             state.status = "loading";
             },
-            fulfilled: (state, action) => {
+            fulfilled: (state) => {
             state.status = "idle";
-            state.users = action.payload;
             },
             rejected: (state) => {
             state.status = "failed";

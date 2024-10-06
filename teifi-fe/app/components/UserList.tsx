@@ -11,11 +11,13 @@ const UserList = () =>{
     useEffect(() => {
         dispatch(getUsers());
     }, []);
+
     const users = useAppSelector(selectUsers);
     const status = useAppSelector(selectStatus);
 
     const customers:any[] = [];
     if(users){
+        console.log(users);
         users.map((user:any) => {
         customers.push([user.firstName, user.lastName, user.email, user.tags, <UpdateUserModal user={user}/>]);
         });

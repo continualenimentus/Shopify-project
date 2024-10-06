@@ -17,8 +17,8 @@ export default function CreateUserModal() {
   const [lastNameError, setLastNameError] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
 
-  const createUser = () => {
-    dispatch(createNewUser({firstName: firstName, lastName: lastName, email: email}));
+  const createUser = async() => {
+    await dispatch(createNewUser({firstName: firstName, lastName: lastName, email: email}));
     dispatch(getUsers());
     handleCloseModal();
   };
@@ -91,16 +91,18 @@ export default function CreateUserModal() {
    const handleCloseModal = () => {
     handleClearFields();
     setShowCreateModal(false);
+    document.getElementById('createModalButton')?.classList.remove('hidden');
    }
 
    const handleOpenModal = () => {
     setShowCreateModal(true);
+    document.getElementById('createModalButton')?.classList.add('hidden');
    }
 
 
   return (
     <>
-      <Button onClick={handleOpenModal} variant='primary'>Create new user</Button>
+      {!showCreateModal&&<Button onClick={handleOpenModal} variant='primary' id='createModalButton'>Create new user</Button>}
       <Modal title="Create new" open={showCreateModal} onClose={handleCloseModal}>
             <TextInput value={firstName} onChange={handleFirstNameChange} onBlur={handleFirstNameBlur} err={firstNameError} label="First Name"/>
             <TextInput value={lastName} onChange={handleLastNameChange} onBlur={handleLastNameBlur} err={lastNameError} label="Last Name"/>

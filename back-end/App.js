@@ -89,7 +89,7 @@ app.put('/update-customer', async (req, res) => {
     const { id, firstName, lastName, email } = req.body;
     const mutation = `
     mutation {
-      customerUpdate(id: "${id}", input: { firstName: "${firstName}", lastName: "${lastName}", email: "${email}" }) {
+      customerUpdate(input: {id: "${id}", firstName: "${firstName}", lastName: "${lastName}", email: "${email}" }) {
         customer {
           id
           firstName
@@ -124,7 +124,7 @@ app.delete('/delete-customer', async (req, res) => {
     const { id } = req.body;
     const mutation = `
     mutation {
-      customerDelete(id: "${id}") {
+      customerDelete(input: {id: "${id}"}) {
         deletedCustomerId
         userErrors {
           field

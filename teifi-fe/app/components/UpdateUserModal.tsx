@@ -18,6 +18,10 @@ export default function UpdateUserModal(user:any) {
   const [lastNameError, setLastNameError] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  const handleShowModal = () => { 
+    setShowModal(true);
+    document.getElementById('createModalButton')?.classList.add('hidden');
+   }
 
   const handleEmailChange = (value: string) => {
     setEmail(value);
@@ -64,7 +68,7 @@ export default function UpdateUserModal(user:any) {
     }
   }
 
-   const handleFormSubmit = (id:string) => {
+   const handleFormSubmit = async(id:string) => {
     if (emailError || firstNameError || lastNameError) {
         return;
     }
@@ -72,7 +76,7 @@ export default function UpdateUserModal(user:any) {
     return;
     }
     else{
-      dispatch(updateCurrentUser({id, firstName, lastName, email}));
+      await dispatch(updateCurrentUser({id, firstName, lastName, email}));
       dispatch(getUsers());
       handleCloseModal();
     }
@@ -90,17 +94,17 @@ export default function UpdateUserModal(user:any) {
    const handleCloseModal = () => {
     setShowModal(false);
     handleClearFields();
+    document.getElementById('createModalButton')?.classList.remove('hidden');
    }
 
-   const handleDeleteUser = (id:string) => {
-    console.log(id);
-    dispatch(deleteCurrentUser(id));
+   const handleDeleteUser = async(id:string) => {
+    await dispatch(deleteCurrentUser(id));
     dispatch(getUsers());
    }
 
   return (
     <>
-      <Button onClick={()=>setShowModal(true)} variant='primary'>Update User</Button>
+      <Button onClick={()=>handleShowModal()} variant='primary'>Update User</Button>
       <Button onClick={()=>handleDeleteUser(u.id)} variant='secondary'>Delete user</Button>
       <Modal title="Update User" open={showModal} onClose={handleCloseModal}>
             <TextInput value={firstName} onChange={handleFirstNameChange} onBlur={handleFirstNameBlur} err={firstNameError} label="First Name"/>
