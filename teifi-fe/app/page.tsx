@@ -9,6 +9,7 @@ export default function IndexPage() {
     <>
       <AppProvider i18n={enTranslations}>
       <CreateUserModal/>
+      <br />
       <UserList />
       </AppProvider>
     </>

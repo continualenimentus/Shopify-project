@@ -17,8 +17,8 @@ a {
 
 .shopify_center {
   width: 70%;
-  margin: auto;
-  margin-top: 5%;
+  margin: auto !important;
+  margin-top: 5% !important;
 }
 
 .hidden {
