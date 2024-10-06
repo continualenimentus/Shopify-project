@@ -74,7 +74,7 @@ export default function CreateUserModal() {
       }
     }
         if (createUser) {
-        createUser(firstName, lastName, email);
+        createUser();
         }
         if(!createUser){
         console.log("CreateUser is undefined");
@@ -90,8 +90,8 @@ export default function CreateUserModal() {
    }
 
    const handleCloseModal = () => {
-    setShowCreateModal(false);
     handleClearFields();
+    setShowCreateModal(false);
    }
 
    const handleOpenModal = () => {

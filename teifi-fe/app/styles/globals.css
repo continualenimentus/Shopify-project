@@ -14,3 +14,9 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.shopify_center {
+  width: 70%;
+  margin: auto;
+  margin-top: 5%;
+}
