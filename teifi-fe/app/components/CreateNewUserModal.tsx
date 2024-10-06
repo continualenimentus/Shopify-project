@@ -1,6 +1,6 @@
 'use client'
 import '@shopify/polaris/build/esm/styles.css';
-import {Button, Modal, Page, PageActions} from '@shopify/polaris';
+import {Button, Modal, PageActions} from '@shopify/polaris';
 import EmailInput from '@/app/components/EmailInput';
 import TextInput from '@/app/components/TextInput';
 import { useState } from "react";
@@ -16,6 +16,7 @@ export default function CreateUserModal() {
 
   const createUser = () => {
     // make an api call to create a new user to the back-end
+
 
   };
 
