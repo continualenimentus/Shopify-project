@@ -4,8 +4,11 @@ import {Button, Modal, PageActions} from '@shopify/polaris';
 import EmailInput from '@/app/components/EmailInput';
 import TextInput from '@/app/components/TextInput';
 import { useState } from "react";
+import { createNewUser, getUsers } from '@/lib/features/customers/customerSlice';
+import { useAppDispatch } from '@/lib/hooks';
 
 export default function CreateUserModal() {  
+  const dispatch = useAppDispatch();
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [firstName, setFirstName] = useState("");
@@ -15,9 +18,9 @@ export default function CreateUserModal() {
   const [showCreateModal, setShowCreateModal] = useState(false);
 
   const createUser = () => {
-    // make an api call to create a new user to the back-end
-
-
+    dispatch(createNewUser({firstName: firstName, lastName: lastName, email: email}));
+    dispatch(getUsers());
+    handleCloseModal();
   };
 
   const handleEmailChange = (value: string) => {
@@ -67,18 +70,13 @@ export default function CreateUserModal() {
   }
 
    const handleFormSubmit = () => {
-    if (emailError || firstNameError || lastNameError) {
-        return;
-      }
-      if(email === "" || firstName === "" || lastName === ""){
-        return;
-      }
-    }
-        if (createUser) {
-        createUser();
+        if (emailError || firstNameError || lastNameError) {
+            return;
         }
-        if(!createUser){
-        console.log("CreateUser is undefined");
+        else if(email === "" || firstName === "" || lastName === ""){
+            return;
+        }
+        else createUser();
     }
 
    const handleClearFields = () => {
@@ -96,7 +94,6 @@ export default function CreateUserModal() {
    }
 
    const handleOpenModal = () => {
-    console.log("Opening modal");
     setShowCreateModal(true);
    }
 

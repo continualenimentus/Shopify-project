@@ -11,7 +11,7 @@ const shopifyGraphQLUrl = `https://${process.env.DOMAIN}/admin/api/2024-07/graph
 
 app.use(express.json());
 app.use(cors({
-    origin: 'https://localhost',  
+    origin: 'http://localhost:3000',  
   
   }));
 
@@ -25,6 +25,7 @@ app.get('/users', async (req, res) => {
             firstName
             lastName
             email
+            tags
           }
         }
       }
@@ -52,13 +53,13 @@ app.post('/create-customer', async (req, res) => {
     const { firstName, lastName, email } = req.body;
     const mutation = `
     mutation {
-      customerCreate(input: { firstName: "${firstName}", lastName: "${lastName}", email: "${email}", tag: "42" }) {
+      customerCreate(input: { firstName: "${firstName}", lastName: "${lastName}", email: "${email}", tags: ["42"] }) {
         customer {
           id
           firstName
           lastName
           email
-          tag
+          tags
         }
         userErrors {
           field
